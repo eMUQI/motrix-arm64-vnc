@@ -20,7 +20,7 @@ jobs:
       - name: Extract version from Dockerfile
         id: version
         run: |
-          VERSION=$(grep -oP 'ARG MOTRIX_VERSION=\K[0-9.]+' ./docker/Dockerfile)
+          VERSION=$(grep -oP 'ARG MOTRIX_VERSION=\K[0-9.]+' ./Dockerfile)
           echo "version=$VERSION" >> $GITHUB_OUTPUT
           echo "Found version: $VERSION"
 
@@ -64,7 +64,7 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           context: .
-          file: ./docker/Dockerfile
+          file: ./Dockerfile
           platforms: linux/arm64
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
