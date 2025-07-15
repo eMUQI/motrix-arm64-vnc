@@ -1,0 +1,23 @@
+services:
+  motrix:
+    image: emuqi/motrix-arm64-vnc:latest
+    container_name: motrix-vnc
+    ports:
+      # 5800 端口用于 Web 访问
+      - "5800:5800"
+      # 5900 端口用于 VNC 客户端直接访问 (可选)
+      - "5900:5900"
+    volumes:
+      - ./data:/config/Downloads
+    environment:
+      # 设置容器内应用的 UID 和 GID
+      # 建议修改为你的宿主机用户的 UID 和 GID，避免挂载目录的权限问题
+      # 通过 `id` 命令查看
+      - USER_ID=1000
+      - GROUP_ID=1000
+      # 设置容器的显示分辨率
+      - DISPLAY_WIDTH=1280 
+      - DISPLAY_HEIGHT=720
+      # 设置 VNC 访问密码 (可选)
+      # - VNC_PASSWORD=your_secret_password
+    restart: unless-stopped
